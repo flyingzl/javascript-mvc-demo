@@ -99,6 +99,7 @@ window.onload = function(){
 	    	});
     		// set方法中会自动调用model的validate方法进行校验，如果不通过则返回false
     		if(employee.set(attr)){
+			employee.set('id', guid());
     			Employees.create(employee);
     		}
 	    },
