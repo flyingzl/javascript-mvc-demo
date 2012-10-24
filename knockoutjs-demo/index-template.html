@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Knockoutjs Demo</title>
+
+<style>
+	html,body{
+		height: 100%;
+		width : 100%;
+		margin: 0;
+		padding: 0;
+		font-size: 12px;
+	}
+	input.username{
+		width : 80px;
+	}
+	input.age{
+		width : 30px;
+	}
+	select.sex{
+		width : 45px;
+	}
+	.emp-table{
+		width: 100%;
+		text-align: center;
+	
+	}
+	.emp-table tr{
+		height: 30px;
+	}
+	.emp-table td .edit{
+		display: none;
+	}
+	.emp-table td.editing .edit{
+		display: block;
+	}
+	.emp-table td.editing .display{
+		display: none;
+	}
+</style>
+</head>
+<body>
+	<div style="width: 650px;margin: 0 auto;" id="app">
+		<p id="emp-form" data-bind="with: appModel">
+			<label for="username">姓名：</label>
+			<input id="username" class="username" data-bind="value: username"/>
+			<label for="sex">性别：</label>
+			<select id="sex" name="sex" class="sex" data-bind="options: sexOptions, optionsText:'name', value: sex">
+			</select>
+			<label for="age">年龄：</label>
+			<input id="age" data-bind="value: age" class="age"/>
+			<label for="position">职位：</label>
+			<input id="position" data-bind ="value: position" class="position" />
+			<button id="add-btn" data-bind='click: addEmployee'>增加</button>
+		</p>
+		<table class="emp-table" border="1" cellspacing="0" cellpadding="0" data-bind="with: employeeModel">
+			<caption style="font-size: 14px;font-weight: bold;">职员信息表（双击编辑）</caption>
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>姓名</th>
+					<th>性别</th>
+					<th>年龄</th>
+					<th>职位</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody data-bind="template: {name:'tpl', foreach: employees}">
+			</tbody>
+		</table>
+	</div>
+
+
+	<script type="text/tpl" id='tpl'>
+		<tr>
+			<td data-bind="text: id"></td>
+			<td class="username" data-bind="event :{dblclick: $parent.showInput}">
+				<div class="display" data-bind="text: username"></div>
+				<div class="edit"><input class="username" data-bind="value: username, event:{blur: $parent.hideInput}" /></div>
+			</td>
+
+			<td class="sex" data-bind="event :{dblclick: $parent.showInput}" >
+				<div class="display" data-bind="text: formatSex"></div>
+				<div class="edit">
+					<select id="sex" class="sex" data-bind="{event:{blur: $parent.hideInput},options: $parent.sexOptions, optionsText:'name', value: sex}">
+					</select>
+				</div>
+			</td>
+
+			<td class="age" data-bind="event :{dblclick: $parent.showInput}"  >
+				<div class="display" data-bind="text: age"></div>
+				<div class="edit"><input class="age" name="age" data-bind="event:{blur: $parent.hideInput}, value: age" /></div>
+			</td>
+
+			<td class="position" data-bind="event :{dblclick: $parent.showInput}">
+				<div class="display" data-bind="text:position"></div>
+				<div class="edit"><input class="position" data-bind="event:{blur: $parent.hideInput}, value: position" /></div>
+			</td>
+
+			<td>
+				<a href="#" class="del" data-bind="click: $parent.removeEmployee">删除</a>
+			</td>
+		</tr>
+	</script>
+
+
+
+	<script type="text/javascript" src="jquery-1.8.2.js"></script>
+	<script type="text/javascript" src="knockout-2.1.0.debug.js"></script>
+	<script type="text/javascript" src="localstorage.js"></script>
+	<script type="text/javascript" src="app.js"></script>
+
+
+</body>
+</html>
